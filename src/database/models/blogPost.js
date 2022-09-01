@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const BlogPost = sequelize.define("BlogPost", {
+  const BlogPost = sequelize.define('BlogPost', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -20,28 +20,22 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     published: {
-      type: DataTypes.DATETIME,
+      type: DataTypes.DATE,
     },
     updated: {
-      type: DataTypes.DATETIME,
+      type: DataTypes.DATE,
     }
   }, {
     createdAt: 'published',
     updateAt: 'updated',
     underscored: true,
-    tableName: 'blogPosts'
+    tableName: 'BlogPosts'
   });
   BlogPost.associate = (models) => {
     BlogPost.belongsTo(models.User, {
-      foreignKey: "id",
-      as: "BlogPosts"
+      foreignKey: "userId",
+      as: "user"
     });
   };
-    //BlogPost.associate = (models) => {
-    //BlogPost.hasMany(models.PostCategory, {
-      //foreignKey: "postId",
-      //as: "postCategories"
-    //});
-  //};
   return BlogPost;
 };
