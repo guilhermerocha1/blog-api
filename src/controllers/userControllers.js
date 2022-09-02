@@ -32,6 +32,17 @@ const userController = {
     const token = jwt.sign({ data: newUser }, JWT_SECRET, jwtConfig);
     res.status(201).json({ token });
   },
+  getAll: async (req, res) => {
+    const getUser = await userService.getAll();
+    res.status(200).json(getUser);
+  },
+
+  findId: async (req, res) => {
+    const { id } = req.params;
+    const findId = await userService.findId(id);
+    if (!findId) return res.status(404).json({ message: 'User does not exist' });
+    res.status(200).json(findId);
+  },
 };
 
 module.exports = {

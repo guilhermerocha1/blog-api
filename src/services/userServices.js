@@ -14,6 +14,21 @@ const userService = {
     const result = await User.create({ displayName, email, password, image });
     return result;
   },
+
+  getAll: async () => {
+    const getUser = await User.findAll(
+      { attributes: ['id', 'displayName', 'email', 'image'] },
+    );
+    return getUser;
+  },
+
+  findId: async (id) => {
+    const findUser = User.findOne(
+      { attributes: ['id', 'displayName', 'email', 'image'], where: { id } },
+    );
+    if (!findUser) return null;
+    return findUser;
+  },
 };
 
 module.exports = {
