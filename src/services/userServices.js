@@ -10,7 +10,6 @@ const userService = {
   create: async ({ displayName, email, password, image }) => {
     const isValid = await User.findOne({ where: { email } });
     if (isValid) return null;
-    console.log(isValid);
     const result = await User.create({ displayName, email, password, image });
     return result;
   },
@@ -22,7 +21,7 @@ const userService = {
     return getUser;
   },
 
-  findId: async (id) => {
+  getById: async (id) => {
     const findUser = User.findOne(
       { attributes: ['id', 'displayName', 'email', 'image'], where: { id } },
     );

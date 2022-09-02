@@ -24,25 +24,43 @@ const userController = {
       return res.status(500).json({ message: MSG_ERROR });
     }
   },
+
   create: async (req, res) => {
-    const { displayName, email, password, image } = req.body;
-    const newUser = await userService.create({ displayName, email, password, image }); 
-    if (!newUser) return res.status(409).json({ message: 'User already registered' });
-    const jwtConfig = { expiresIn: '1d', algorithm: 'HS256' };
-    const token = jwt.sign({ data: newUser }, JWT_SECRET, jwtConfig);
-    res.status(201).json({ token });
-  },
-  getAll: async (req, res) => {
-    const getUser = await userService.getAll();
-    res.status(200).json(getUser);
+    try {
+      const { displayName, email, password, image } = req.body;
+      const newUser = await userService.create({ displayName, email, password, image }); 
+      if (!newUser) return res.status(409).json({ message: 'User already registered' });
+      const jwtConfig = { expiresIn: '1d', algorithm: 'HS256' };
+      const token = jwt.sign({ data: newUser }, JWT_SECRET, jwtConfig);
+      res.status(201).json({ token });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: MSG_ERROR });
+    }
   },
 
-  findId: async (req, res) => {
-    const { id } = req.params;
-    const findId = await userService.findId(id);
-    if (!findId) return res.status(404).json({ message: 'User does not exist' });
-    res.status(200).json(findId);
+  getAll: async (_req, res) => {
+    try {
+      const getUser = await userService.getAll();
+      res.status(200).json(getUser);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: MSG_ERROR });
+    }
   },
+
+  getById: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const findId = await userService.getById(id);
+      if (!findId) return res.status(404).json({ message: 'User does not exist' });
+      res.status(200).json(findId);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: MSG_ERROR });
+    }
+  },
+
 };
 
 module.exports = {

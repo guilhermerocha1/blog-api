@@ -16,7 +16,7 @@ app.get('/', (_request, response) => {
 app.post('/login', userController.createLogin);
 app.post('/user', newUserValidate, userController.create);
 app.get('/user', validateToken, userController.getAll);
-app.get('/user/:id', validateToken, userController.findId);
+app.get('/user/:id', validateToken, userController.getById);
 app.get('/categories', validateToken, categoriesController.getAll);
 app.post('/categories', validateToken, categoriesController.create);
 
