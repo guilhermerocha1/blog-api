@@ -1,24 +1,28 @@
 const jwt = require('jsonwebtoken');
 const { userService } = require('../services/userServices');
 
-const JWT_SECRET = 'minhasenhadificil'; 
+const { JWT_SECRET } = process.env; 
+const MSG_ERROR = 'ERRO INTERNO';
 
 const userController = {
 
   createLogin: async (req, res) => {
-    // try {
+    try {
       const { email, password } = req.body;
-      
-      const result = await userService.createLogin({ email });
-       if (!result || result.password !== password) {
-         return res.status(400).json({ message: 'Invalid fields' });
-       }
-
-      const token = jwt.sign({ userId: 1 }, JWT_SECRET, { expiresId: 500 });
+      if (!email || !password) {
+        return res.status(400).json({ message: 'Some required fields are missing' });
+      }
+      const result = await userService.createLogin({ email, password });
+      if (!result) {
+        return res.status(400).json({ message: 'Invalid fields' });
+      }
+      const jwtConfig = { expiresIn: '1d', algorithm: 'HS256' };
+      const token = jwt.sign({ data: result }, JWT_SECRET, jwtConfig);
       res.status(200).json({ token });
-    // } catch (error) {
-      // return res.status(500).json({ message: 'Erro interno', error: error.message });
-    // }
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: MSG_ERROR });
+    }
   },
 };
 
