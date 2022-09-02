@@ -12,8 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, {
     timestamps: false,
-    underscored: true,
-    tableName: 'categories'
+    tableName: 'Categories'
   });
   Category.associate = (models) => {
     Category.hasMany(models.PostCategory, {

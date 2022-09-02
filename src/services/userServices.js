@@ -16,7 +16,7 @@ const userService = {
   },
 
   getAll: async () => {
-    const getUser = await User.findAll(
+   const getUser = await User.findAll(
       { attributes: ['id', 'displayName', 'email', 'image'] },
     );
     return getUser;
