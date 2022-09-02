@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       allowNull: false,
     },
-    displayname: {
+    displayName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -25,7 +25,6 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, {
     timestamps: false,
-    underscored: true,
     tableName: 'Users'
   });
   User.associate = (models) => {
