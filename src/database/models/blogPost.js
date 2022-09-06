@@ -27,14 +27,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     createdAt: 'published',
-    updateAt: 'updated',
-    underscored: true,
+    updatedAt: 'updated',
     tableName: 'BlogPosts'
   });
   BlogPost.associate = (models) => {
     BlogPost.belongsTo(models.User, {
-      foreignKey: "userId",
-      as: "user"
+      foreignKey: 'userId',
+      as: 'user'
     });
   };
   return BlogPost;
